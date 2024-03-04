@@ -3,7 +3,7 @@
 This repository contains the source code for a simple Math Bot application developed using React for the frontend and Node.js with Express for the backend. The application simulates a basic chatbot interaction for performing arithmetic operations, with interactions stored in a MongoDB database.
 
 ##image of an mathbot
-![mathbot Image]([example.png](https://ibb.co/JdHFwQz))
+![mathbot Image](https://ibb.co/JdHFwQz)
 ## Features
 
 - User-friendly chat interface for inputting arithmetic operations.
@@ -20,7 +20,7 @@ To run the application locally, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/suleman15/Math-Bot.git
    ```
 
 2. Navigate to the frontend directory:
