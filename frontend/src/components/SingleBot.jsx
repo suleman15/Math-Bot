@@ -100,7 +100,7 @@ const SingleBot = ({
                 </div>
               ))}
             </div>
-            <span ref={bottomRef}>lorem</span>
+            <span ref={bottomRef}></span>
           </div>
 
           <form className="flex bg-[pink] rounded-lg m-1 bg-black/10 border-2 focus-within:border-black">

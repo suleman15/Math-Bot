@@ -14,13 +14,13 @@ const AllMathBot = ({
   const [inputCreate, setInputCreate] = useState("");
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 py-2  mr-2 max-h-[600px] overflow-auto  ">
       {names.map((name, index) => (
         <div
           key={name._id}
           className={`${
-            singleChatId == name._id ? `bg-black text-white` : `bg-[red]`
-          } gap-2 rounded-lg px-3 py-2 cursor-pointer flex justify-between relative`}
+            singleChatId == name._id ? `bg-black/50 text-white` : `bg-black/30`
+          }  gap-2 rounded-lg px-3 py-2 cursor-pointer flex justify-between relative`}
           onClick={() => {
             fetchSingleChat(name._id);
           }}
