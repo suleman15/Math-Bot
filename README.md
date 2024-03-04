@@ -60,7 +60,8 @@ To run the application locally, follow these steps:
 3. Setup .env file : 
 
    ```bash
-   CONNECTION_STRING = YOUR ATLAS MONGO CONNECTION STRING \n PORT = PORT OF AN IP
+   CONNECTION_STRING = YOUR ATLAS MONGO CONNECTION STRING 
+   PORT = PORT OF AN IP
    ```
 
 4. Start the server:
