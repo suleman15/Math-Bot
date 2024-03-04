@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { BsThreeDots, BsTrash } from "react-icons/bs";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -28,8 +28,9 @@ const SingleBot = ({
           operation,
         })
         .then((res) => {
-          fetchSingleChat(singleChatId);
+          fetchSingleChat(singleChatId); // Scroll to bottom after updating chat
         });
+      scrollToBottom();
     } catch (error) {
       toast.error(`Must be Arithematic operators +,-,/,*,**`);
     }
@@ -40,11 +41,19 @@ const SingleBot = ({
     clearTimeout(timeoutId);
   };
 
+  const scrollToBottom = () => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  // Scroll to bottom on component mount
+
   return (
-    <div className="h-full  flex items-end">
-      <div className="  h-full w-full  ">
-        <div className="flex flex-col h-full   ">
-          <span className="sticky top-0 right-0 px-3 w-full py-2 flex bg-white justify-between items-center   border-b-2 border-black/10">
+    <div className="h-full flex items-end">
+      <div className="h-full w-full ">
+        <div className="flex flex-col h-full ">
+          <span className="sticky top-0 right-0 px-3 w-full py-2 flex bg-white justify-between items-center border-b-2 border-black/10">
             <span className="flex flex-col ml-14">
               <span className="text-lg font-bold line-clamp-1 pr-3">
                 {singleChat?.name}
@@ -77,18 +86,16 @@ const SingleBot = ({
             <div className="flex flex-col gap-4">
               {singleChat?.operations?.map((_, index) => (
                 <div key={index} className="flex gap-4 flex-col">
-                  <span className=" ml-auto   w-fit">
-                    <span className="   px-4   line-clamp-2 bg-black/20 py-2  rounded-s-lg rounded-tr-lg max-w-[90%]">
+                  <span className=" ml-auto w-fit">
+                    <span className=" px-4 line-clamp-2 bg-black/20 py-2  rounded-s-lg rounded-tr-lg max-w-[90%]">
                       {_.operation}
                     </span>
-                    <span className="text-xs font-bold ml-auto ">
+                    <span className="text-xs font-bold ml-auto">
                       {moment(_?.timestamp).fromNow()}
                     </span>
                   </span>
                   <span className="px-4 mr-auto py-2 bg-black/20 w-fit rounded-s-lg rounded-t-lg max-w-[90%]">
-                    <span className=" rounded-md     line-clamp-2">
-                      {_.result}
-                    </span>
+                    <span className=" rounded-md line-clamp-2">{_.result}</span>
                   </span>
                 </div>
               ))}
@@ -96,7 +103,7 @@ const SingleBot = ({
             <span ref={bottomRef}>lorem</span>
           </div>
 
-          <form className=" flex bg-[pink] rounded-lg m-1 bg-black/10 border-2 focus-within:border-black">
+          <form className="flex bg-[pink] rounded-lg m-1 bg-black/10 border-2 focus-within:border-black">
             <input
               type="text"
               name="message"
