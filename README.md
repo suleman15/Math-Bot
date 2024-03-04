@@ -2,8 +2,8 @@
 
 This repository contains the source code for a simple Math Bot application developed using React for the frontend and Node.js with Express for the backend. The application simulates a basic chatbot interaction for performing arithmetic operations, with interactions stored in a MongoDB database.
 
-##image of an mathbot
-![mathbot Image](https://ibb.co/JdHFwQz)
+## image of an mathbot
+[![JVdcLjj.md.png](https://iili.io/JVdcLjj.md.png)](https://freeimage.host/i/JVdcLjj)
 ## Features
 
 - User-friendly chat interface for inputting arithmetic operations.
