@@ -23,7 +23,7 @@ function App() {
       const response = await axios.get("http://localhost:4000/mathbot/name");
       setNames(response.data.mathBots);
     } catch (error) {
-      toast.error("Error fetching MathBot names:", error);
+      console.log("Error fetching MathBot names:", error);
     }
   };
 
@@ -33,7 +33,7 @@ function App() {
       fetchMathBotNames();
       toast.success("MathBot deleted successfully");
     } catch (error) {
-      toast.error("Error deleting MathBot:", error);
+      console.log("Error deleting MathBot:", error);
     }
   };
 
@@ -42,7 +42,7 @@ function App() {
       await axios.get(`http://localhost:4000/mathbot/create/${name}`);
       fetchMathBotNames();
     } catch (error) {
-      toast.error("Error creating MathBot:", error);
+      toast.error("ChatName must be different!");
     }
   };
 
@@ -61,7 +61,7 @@ function App() {
           setSingleChat(res.data.mathBot);
         });
     } catch (error) {
-      toast.error("Error fetching SingleChat:", error);
+      console.log("Error fetching SingleChat:", error);
     }
   };
 
@@ -84,20 +84,24 @@ function App() {
       <div
         className={`w-[calc(100%-15px)] h-[calc(100vh-15px)] flex backdrop-blur-lg border-2 p-2  border-white rounded-lg   shadow-lg `}
       >
-        <div className="w-3/12 max-md:absolute  ">
-          <div className="md:hidden max-md:block bg-[pink] z-50">++</div>
-          <div className="md:block max-md:hidden">
-            <h1 className="font-bold text-3xl my-2">Chats</h1>
-            <div className="flex flex-col gap-2 w-[95%]">
-              <AllMathBot
-                names={names}
-                allFn={{
-                  createSingleMathBot,
-                  delteByMathBotId,
-                  fetchSingleChat,
-                  singleChatId,
-                }}
-              />
+        <div className="w-3/12 max-md:w-[calc(100%-15px)]  max-md:absolute  z-50">
+          <div className="relative ">
+            <div className="md:hidden mx-2 max-md:flex  bg-black/25  w-8 h-8 rounded-lg mt-4 items-center justify-center z-50">
+              50
+            </div>
+            <div className="md:block max-md:bg-red-400 max-md:absolute mt-5 w-full ">
+              <h1 className="font-bold text-3xl my-2">Chats</h1>
+              <div className="flex flex-col gap-2 w-full">
+                <AllMathBot
+                  names={names}
+                  allFn={{
+                    createSingleMathBot,
+                    delteByMathBotId,
+                    fetchSingleChat,
+                    singleChatId,
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -108,6 +112,7 @@ function App() {
               singleChat,
               singleChatId,
               fetchSingleChat,
+              delteByMathBotId,
             }}
           />
         </div>
