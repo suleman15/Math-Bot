@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { BsThreeDots, BsTrash3 } from "react-icons/bs";
 
 const AllMathBot = ({
@@ -12,9 +12,10 @@ const AllMathBot = ({
 }) => {
   const [deleteBlockOpen, setdeleteBlockOpen] = useState("");
   const [inputCreate, setInputCreate] = useState("");
+  const toBottomRef = useRef();
 
   return (
-    <div className="flex flex-col gap-2 py-2  mr-2 max-h-[600px] overflow-auto  ">
+    <div className="flex flex-col gap-2 py-2  mr-2 max-h-[calc(100vh-100px)] overflow-auto  ">
       {names.map((name, index) => (
         <div
           key={name._id}
@@ -39,7 +40,7 @@ const AllMathBot = ({
               <BsThreeDots />
             </span>
             {deleteBlockOpen == name._id && (
-              <div className="absolute  p-1   bg-white shadow-lg z-10 border left-0 top-[calc(100%+10px)] overflow-hidden">
+              <div className="absolute  p-1   bg-white shadow-lg z-10 border right-0 top-[calc(100%+10px)] overflow-hidden">
                 <button
                   onClick={() => {
                     delteByMathBotId(name._id);
@@ -60,6 +61,7 @@ const AllMathBot = ({
         onSubmit={(e) => {
           e.preventDefault();
           createSingleMathBot(inputCreate);
+          toBottomRef.current.scrollIntoView({ behavior: "smooth" });
         }}
       >
         <input
@@ -71,10 +73,14 @@ const AllMathBot = ({
           value={inputCreate}
         />
 
-        <button type="submit" className="bg-blue-400 w-full py-2 rounded-lg">
+        <button
+          type="submit"
+          className="bg-black text-white w-full py-2 rounded-lg"
+        >
           Create
         </button>
       </form>
+      <div ref={toBottomRef}></div>
     </div>
   );
 };

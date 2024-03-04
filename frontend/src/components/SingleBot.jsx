@@ -114,7 +114,7 @@ const SingleBot = ({
             />
             <button
               type="submit"
-              className="bg-red-400  rounded-lg px-5 py-2 m-1"
+              className="bg-black text-white  rounded-lg px-5 py-2 m-1"
               onClick={(e) => {
                 e.preventDefault();
                 createSingleOperation({
