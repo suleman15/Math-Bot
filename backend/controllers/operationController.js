@@ -1,23 +1,36 @@
-import OperationModel from "../models/operationModel.js";
+import MathBot from "../models/mathBotModel.js";
+import Operation from "../models/operationModel.js";
 
 const postOperation = async (req, res) => {
-  const { operation } = req.body;
+  const { id, operation } = req.body;
+  console.log(req.body);
+
   if (!operation) {
     return res.status(400).json({ error: "Operation is required" });
+  }
+  if (!id) {
+    return res.status(400).json({ error: "ID is required" });
   }
 
   try {
     const formattedOperation = operation.replace(/(\d)\(/g, "$1*(");
-
     let result = eval(formattedOperation); // Using eval for simplicity; consider using a safer alternative in production
 
     result = Number(result.toFixed(2));
 
-    const newOperation = new OperationModel({ operation, result });
-    await newOperation.save();
-    res.json({ result });
+    // Create a new operation document
+    const newOperation = await Operation.create({ operation, result });
+
+    // Find the MathBot document by ID and push the new operation's ID to its operations array
+    const updatedMathBot = await MathBot.findByIdAndUpdate(
+      id,
+      { $push: { operations: newOperation._id } },
+      { new: true }
+    );
+
+    res.json({ newOperation, updatedMathBot });
   } catch (error) {
-    res.status(400).json({ error: "Invalid operation" });
+    res.status(400).json({ status: "Invalid operation", error });
   }
 };
 

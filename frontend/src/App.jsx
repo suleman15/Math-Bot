@@ -107,6 +107,7 @@ function App() {
             allFn={{
               singleChat,
               singleChatId,
+              fetchSingleChat,
             }}
           />
         </div>

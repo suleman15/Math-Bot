@@ -11,4 +11,5 @@ router.get("/create/:name", createMathBot);
 router.get("/name", getAllMathBotNames);
 router.get("/delete/:_id", deleteSingleMathBot);
 router.get("/single/:id?", singleChatBot);
+
 export default router;

@@ -61,7 +61,9 @@ const singleChatBot = async (req, res) => {
       mathBot = await MathBot.findById(id).populate("operations");
     } else {
       // If chatbotId is not provided, fetch the most recently created MathBot
-      mathBot = await MathBot.findOne().sort({ createdAt: -1 });
+      mathBot = await MathBot.findOne()
+        .populate("operations")
+        .sort({ createdAt: -1 });
     }
 
     if (!mathBot) {

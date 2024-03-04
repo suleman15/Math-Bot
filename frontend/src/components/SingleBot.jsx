@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { BsThreeDots, BsTrash } from "react-icons/bs";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-const SingleBot = ({ allFn: { singleChat, setSingleChatId } }) => {
+const SingleBot = ({
+  allFn: { singleChat, singleChatId, fetchSingleChat },
+}) => {
   const [openTrash, setOpenTrash] = useState(false);
   const [inputField, setInputField] = useState("");
   let timeoutId;
@@ -12,6 +16,21 @@ const SingleBot = ({ allFn: { singleChat, setSingleChatId } }) => {
     timeoutId = setTimeout(() => {
       setOpenTrash(false);
     }, 3000);
+  };
+
+  const createSingleOperation = async ({ id, operation }) => {
+    try {
+      await axios
+        .post(`http://localhost:4000/operation`, {
+          id,
+          operation,
+        })
+        .then((res) => {
+          fetchSingleChat(singleChatId);
+        });
+    } catch (error) {
+      toast.error("Error creating MathBot:", error);
+    }
   };
 
   const handleTrashClick = () => {
@@ -47,49 +66,20 @@ const SingleBot = ({ allFn: { singleChat, setSingleChatId } }) => {
           </span>
           <div className="flex flex-col h-full justify-between py-4 px-2 overflow-y-scroll">
             <div className="flex flex-col gap-4">
-              {JSON.stringify(singleChat)}
               {singleChat?.operations?.map((_, index) => (
                 <div key={index} className="flex gap-4 flex-col">
                   <span className="px-4 ml-auto py-2 bg-[red] w-fit rounded-s-lg rounded-tr-lg max-w-[90%]">
                     <span className=" rounded-md     line-clamp-2">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Officia delectus facilis excepturi ducimus cupiditate
-                      deleniti ab debitis dolore accusamus, sunt a odio, fugiat
-                      suscipit ad soluta nihil aliquam molestias accusantium?
-                      Saepe, est ex? Doloremque sit culpa, quos eius tempore
-                      maxime numquam molestiae alias illum aut atque ab rem,
-                      iure quae.
+                      {_.operation}
                     </span>
                   </span>
                   <span className="px-4 mr-auto py-2 bg-[red] w-fit rounded-s-lg rounded-t-lg max-w-[90%]">
                     <span className=" rounded-md     line-clamp-2">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Officia delectus facilis excepturi ducimus cupiditate
-                      deleniti ab debitis dolore accusamus, sunt a odio, fugiat
-                      suscipit ad soluta nihil aliquam molestias accusantium?
-                      Saepe, est ex? Doloremque sit culpa, quos eius tempore
-                      maxime numquam molestiae alias illum aut atque ab rem,
-                      iure quae.
+                      {_.result}
                     </span>
                   </span>
                 </div>
               ))}
-              {/* {Array(10)
-                .fill()
-                .map((_, index) => (
-                  <div key={index} className="flex gap-4 flex-col">
-                    <span className="px-4 ml-auto py-2 bg-[red] w-fit rounded-s-lg rounded-tr-lg max-w-[90%]">
-                      <span className=" rounded-md     line-clamp-2">
-                     
-                      </span>
-                    </span>
-                    <span className="px-4 mr-auto py-2 bg-[red] w-fit rounded-s-lg rounded-t-lg max-w-[90%]">
-                      <span className=" rounded-md     line-clamp-2">
-                        
-                      </span>
-                    </span>
-                  </div>
-                ))} */}
             </div>
           </div>
           <span></span>
@@ -107,7 +97,10 @@ const SingleBot = ({ allFn: { singleChat, setSingleChatId } }) => {
               className="bg-red-400  rounded-lg px-5 py-2 m-1"
               onClick={(e) => {
                 e.preventDefault();
-                console.log("click");
+                createSingleOperation({
+                  id: singleChatId,
+                  operation: inputField,
+                });
               }}
             >
               {" "}
