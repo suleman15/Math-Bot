@@ -104,6 +104,7 @@ configuration
 - Axios
 - Moment
 - React-icons
+- React-hot-toast
 
 ### Backend
 - Node.js
@@ -112,3 +113,4 @@ configuration
 - Nodemon
 - CORS
 - BodyParser
+- Mongoose
