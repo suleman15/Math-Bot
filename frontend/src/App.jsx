@@ -67,7 +67,7 @@ function App() {
 
   useEffect(() => {
     fetchMathBotNames();
-    fetchSingleChat(); // Fetch recent chat initially
+    fetchSingleChat(singleChatId); // Fetch recent chat initially
   }, []);
 
   return (
@@ -94,14 +94,21 @@ function App() {
                 allFn={{
                   createSingleMathBot,
                   delteByMathBotId,
+                  fetchSingleChat,
+                  singleChatId,
                 }}
               />
             </div>
           </div>
         </div>
         <div className="flex flex-col md:w-11/12  max-md:w-full  bg-white rounded-lg">
-          {JSON.stringify(singleChat)}
-          <SingleBot singleChat={singleChat} />
+          {JSON.stringify(setSingleChatId)}
+          <SingleBot
+            allFn={{
+              singleChat,
+              singleChatId,
+            }}
+          />
         </div>
       </div>
       <Toaster position="top-right" reverseOrder={false} />

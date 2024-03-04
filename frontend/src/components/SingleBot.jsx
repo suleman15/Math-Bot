@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { BsThreeDots, BsTrash } from "react-icons/bs";
 
-const SingleBot = () => {
+const SingleBot = ({ allFn: { singleChat, setSingleChatId } }) => {
   const [openTrash, setOpenTrash] = useState(false);
+  const [inputField, setInputField] = useState("");
   let timeoutId;
 
   const handleClick = () => {
     setOpenTrash(!openTrash);
 
-    // Set timeout to automatically close the trash menu after 5 seconds
     timeoutId = setTimeout(() => {
       setOpenTrash(false);
     }, 3000);
@@ -24,7 +24,10 @@ const SingleBot = () => {
       <div className="  h-full w-full  ">
         <div className="flex flex-col h-full   ">
           <span className="sticky top-0 right-0 px-3 w-full py-2 flex bg-white justify-between items-center   border-b-2 border-black/10">
-            <span>ChatName</span>
+            <span>
+              <span className="text-lg font-bold">{singleChat?.name}</span>
+              <span>{}</span>
+            </span>
             <span className="relative">
               <div className="p-2 bg-black/20 rounded-lg" onClick={handleClick}>
                 <BsThreeDots />
@@ -44,36 +47,49 @@ const SingleBot = () => {
           </span>
           <div className="flex flex-col h-full justify-between py-4 px-2 overflow-y-scroll">
             <div className="flex flex-col gap-4">
-              {Array(10)
+              {JSON.stringify(singleChat)}
+              {singleChat?.operations?.map((_, index) => (
+                <div key={index} className="flex gap-4 flex-col">
+                  <span className="px-4 ml-auto py-2 bg-[red] w-fit rounded-s-lg rounded-tr-lg max-w-[90%]">
+                    <span className=" rounded-md     line-clamp-2">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Officia delectus facilis excepturi ducimus cupiditate
+                      deleniti ab debitis dolore accusamus, sunt a odio, fugiat
+                      suscipit ad soluta nihil aliquam molestias accusantium?
+                      Saepe, est ex? Doloremque sit culpa, quos eius tempore
+                      maxime numquam molestiae alias illum aut atque ab rem,
+                      iure quae.
+                    </span>
+                  </span>
+                  <span className="px-4 mr-auto py-2 bg-[red] w-fit rounded-s-lg rounded-t-lg max-w-[90%]">
+                    <span className=" rounded-md     line-clamp-2">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Officia delectus facilis excepturi ducimus cupiditate
+                      deleniti ab debitis dolore accusamus, sunt a odio, fugiat
+                      suscipit ad soluta nihil aliquam molestias accusantium?
+                      Saepe, est ex? Doloremque sit culpa, quos eius tempore
+                      maxime numquam molestiae alias illum aut atque ab rem,
+                      iure quae.
+                    </span>
+                  </span>
+                </div>
+              ))}
+              {/* {Array(10)
                 .fill()
                 .map((_, index) => (
                   <div key={index} className="flex gap-4 flex-col">
                     <span className="px-4 ml-auto py-2 bg-[red] w-fit rounded-s-lg rounded-tr-lg max-w-[90%]">
                       <span className=" rounded-md     line-clamp-2">
-                        Lorem ipsum dolor sit ametldfjaskdfjaksdjafklsj Lorem
-                        ipsum dolor sit amet consectetur adipisicing elit.
-                        Quidem, aliquam pariatur quasi, consequuntur molestias
-                        repellendus ratione officia fugiat incidunt quia dolore
-                        error hic. Iure nulla eius dolor dolore, eligendi omnis
-                        natus et ea iusto voluptatum commodi mollitia atque
-                        debitis pariatur totam vero. Ipsa, voluptates dolorum!
-                        Doloribus officiis amet expedita magni?
+                     
                       </span>
                     </span>
                     <span className="px-4 mr-auto py-2 bg-[red] w-fit rounded-s-lg rounded-t-lg max-w-[90%]">
                       <span className=" rounded-md     line-clamp-2">
-                        Lorem ipsum dolor sit ametldfjaskdfjaksdjafklsj Lorem
-                        ipsum dolor sit amet consectetur adipisicing elit.
-                        Quidem, aliquam pariatur quasi, consequuntur molestias
-                        repellendus ratione officia fugiat incidunt quia dolore
-                        error hic. Iure nulla eius dolor dolore, eligendi omnis
-                        natus et ea iusto voluptatum commodi mollitia atque
-                        debitis pariatur totam vero. Ipsa, voluptates dolorum!
-                        Doloribus officiis amet expedita magni?
+                        
                       </span>
                     </span>
                   </div>
-                ))}
+                ))} */}
             </div>
           </div>
           <span></span>
@@ -83,10 +99,16 @@ const SingleBot = () => {
               name="message"
               className="w-full bg-transparent p-3 outline-none"
               id="message"
+              value={inputField}
+              onChange={(e) => setInputField(e.target.value)}
             />
             <button
               type="submit"
               className="bg-red-400  rounded-lg px-5 py-2 m-1"
+              onClick={(e) => {
+                e.preventDefault();
+                console.log("click");
+              }}
             >
               {" "}
               Submitted

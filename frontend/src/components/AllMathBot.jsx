@@ -3,7 +3,12 @@ import { BsThreeDots, BsTrash3 } from "react-icons/bs";
 
 const AllMathBot = ({
   names,
-  allFn: { createSingleMathBot, delteByMathBotId },
+  allFn: {
+    createSingleMathBot,
+    delteByMathBotId,
+    fetchSingleChat,
+    singleChatId,
+  },
 }) => {
   const [deleteBlockOpen, setdeleteBlockOpen] = useState("");
   const [inputCreate, setInputCreate] = useState("");
@@ -13,16 +18,22 @@ const AllMathBot = ({
       {names.map((name, index) => (
         <div
           key={name._id}
-          className="bg-white/50 gap-2 rounded-lg px-3 py-2 cursor-pointer flex justify-between relative"
+          className={`${
+            singleChatId == name._id ? `bg-black text-white` : `bg-[red]`
+          } gap-2 rounded-lg px-3 py-2 cursor-pointer flex justify-between relative`}
+          onClick={() => {
+            fetchSingleChat(name._id);
+          }}
         >
-          <span className="line-clamp-1">{name.name}</span>
+          <span className="line-clamp-1 ">{name.name}</span>
           <span className="relative">
             <span
-              onClick={() =>
+              onClick={(e) => {
+                e.stopPropagation();
                 !deleteBlockOpen.length > 0
                   ? setdeleteBlockOpen(name._id)
-                  : setdeleteBlockOpen("")
-              }
+                  : setdeleteBlockOpen("");
+              }}
               className="block p-1 rounded-full hover:bg-white cursor-pointer"
             >
               <BsThreeDots />
@@ -30,7 +41,10 @@ const AllMathBot = ({
             {deleteBlockOpen == name._id && (
               <div className="absolute  p-1   bg-white shadow-lg z-10 border left-0 top-[calc(100%+10px)] overflow-hidden">
                 <button
-                  onClick={() => delteByMathBotId(name._id)}
+                  onClick={() => {
+                    delteByMathBotId(name._id);
+                    fetchSingleChat();
+                  }}
                   className="flex w-32  p-1   items-center gap-2 hover:bg-red-400 hover:text-white  rounded-sm"
                 >
                   <BsTrash3 />
