@@ -62,11 +62,11 @@ const SingleBot = ({
         ) : (
           <div className="flex flex-col h-full ">
             <span className=" sticky top-0 right-0 px-3 w-full py-2 flex  bg-white justify-between items-center border-b-2 border-black/10">
-              <span className="flex flex-col ml-14 ">
-                <span className="text-lg font-bold  line-clamp-1 max-w-96 pr-3">
+              <span className="flex flex-col max-md:ml-14  ">
+                <span className="text-xl font-bold  line-clamp-1 max-w-96 pr-3">
                   {singleChat?.name}
                 </span>
-                <span className="text-sm">
+                <span className="text-xs ">
                   {moment(singleChat?.timestamp).fromNow()}
                 </span>
               </span>
