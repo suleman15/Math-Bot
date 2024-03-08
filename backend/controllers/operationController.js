@@ -24,7 +24,7 @@ const postOperation = async (req, res) => {
     // Find the MathBot document by ID and push the new operation's ID to its operations array
     const updatedMathBot = await MathBot.findByIdAndUpdate(
       id,
-      { $push: { operations: newOperation._id } },
+      { timestamp: new Date(), $push: { operations: newOperation._id } },
       { new: true }
     );
 

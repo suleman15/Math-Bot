@@ -26,7 +26,9 @@ const createMathBot = async (req, res) => {
 const getAllMathBotNames = async (req, res) => {
   try {
     // Fetch all MathBot documents
-    const mathBots = await MathBot.find({}, { name: 1 });
+    const mathBots = await MathBot.find({}, { name: 1 }).sort({
+      timestamp: -1,
+    });
 
     // Extract names from MathBot documents
 
@@ -63,7 +65,7 @@ const singleChatBot = async (req, res) => {
       // If chatbotId is not provided, fetch the most recently created MathBot
       mathBot = await MathBot.findOne()
         .populate("operations")
-        .sort({ createdAt: -1 });
+        .sort({ timestamp: -1 });
     }
 
     if (!mathBot) {

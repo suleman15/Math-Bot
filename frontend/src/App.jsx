@@ -3,6 +3,7 @@ import axios from "axios";
 import AllMathBot from "./components/AllMathBot";
 import toast, { Toaster } from "react-hot-toast";
 import SingleBot from "./components/SingleBot";
+import { FaBars } from "react-icons/fa";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -29,7 +30,11 @@ function App() {
 
   const delteByMathBotId = async (_id) => {
     try {
-      await axios.get(`http://localhost:4000/mathbot/delete/${_id}`);
+      await axios
+        .get(`http://localhost:4000/mathbot/delete/${_id}`)
+        .then((res) => {
+          fetchSingleChat();
+        });
       fetchMathBotNames();
       toast.success("MathBot deleted successfully");
     } catch (error) {
@@ -39,7 +44,12 @@ function App() {
 
   const createSingleMathBot = async (name) => {
     try {
-      await axios.get(`http://localhost:4000/mathbot/create/${name}`);
+      await axios
+        .get(`http://localhost:4000/mathbot/create/${name}`)
+        .then((res) => {
+          fetchSingleChat(res?.data?.mathBot?._id);
+          toast.success("Created Successfully");
+        });
       fetchMathBotNames();
     } catch (error) {
       toast.error("ChatName must be different!");
@@ -58,7 +68,11 @@ function App() {
         )
         .then((res) => {
           setSingleChatId(res?.data?.mathBot?._id);
+          console.log(res.data);
           setSingleChat(res.data.mathBot);
+        })
+        .catch((err) => {
+          setSingleChat([]);
         });
     } catch (error) {
       console.log("Error fetching SingleChat:", error);
@@ -82,16 +96,18 @@ function App() {
         className="absolute -z-20 left-0 bottom-0 w-full h-screen"
       />
       <div
-        className={`w-[calc(100%-15px)] h-[calc(100vh-15px)] flex backdrop-blur-lg border-2 p-2  border-white rounded-lg   shadow-lg `}
+        className={`w-[calc(100%-15px)] h-[calc(100vh-15px)] flex backdrop-blur-md border-2 p-2  border-white rounded-lg   shadow-lg `}
       >
-        <div className="w-3/12 max-md:w-[calc(100%-15px)]  max-md:absolute  z-50">
-          <div className="relative ">
-            <div className="md:hidden mx-2 max-md:flex  bg-black/25  w-8 h-8 rounded-lg mt-4 items-center justify-center z-50">
-              50
+        <div className="w-3/12 max-md:w-fit max-md:absolute    z-30">
+          <div className="relative group ">
+            <div className="md:hidden  max-md:flex py-3 ml-2  w-fit ">
+              <div className="aspect-square flex bg-black/20 group-hover:bg-black/50   rounded-lg p-3">
+                <FaBars />
+              </div>
             </div>
-            <div className="md:block max-md:bg-red-400 max-md:absolute mt-5 w-full ">
+            <div className="md:flex flex-col max-md:hidden max-md:px-5 max-md:w-[calc(100vw-35px)] max-md:bg-white/30 max-md:backdrop-blur-sm group-hover:block max-md:absolute  w-full ">
               <h1 className="font-bold text-3xl my-2">Chats</h1>
-              <div className="flex flex-col gap-2 w-full">
+              <div className="flex flex-col gap-2 w-full ">
                 <AllMathBot
                   names={names}
                   allFn={{
@@ -105,7 +121,7 @@ function App() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col md:w-11/12  max-md:w-full  bg-white rounded-lg">
+        <div className="flex flex-col overflow-hidden md:w-11/12  max-md:w-full  bg-white rounded-lg">
           {JSON.stringify(setSingleChatId)}
           <SingleBot
             allFn={{
